@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');  // Ensure bcrypt is included
 const app = express();
 const port = 3000;
-
+const moment = require('moment'); // For handling current time
 // Create MySQL connection
 const db = mysql.createConnection({
   host: 'localhost',
@@ -12,7 +12,8 @@ const db = mysql.createConnection({
   password: '312531', // Replace with your MySQL password
   database: 'signup' // Replace with your MySQL database name
 });
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Connect to MySQL
 db.connect((err) => {
   if (err) {
@@ -106,6 +107,54 @@ app.post('/login', (req, res) => {
           // Email not found
           res.status(401).send('Invalid email or password.');
       }
+  });
+});
+///
+app.post('/submit-form', (req, res) => {
+  const { machine, Complaint_Type, component, value } = req.body;
+
+  console.log('Form Data Received:', { machine, Complaint_Type, component, value });
+
+  // Get the most recent email from logs
+  db.query('SELECT emailid FROM logs ORDER BY log_id DESC LIMIT 1', (err, logResult) => {
+    if (err) {
+      console.error('Error fetching logs:', err);
+      return res.status(500).send('Server Error');
+    }
+
+    const tempMail = logResult[0].emailid;
+    console.log('Most Recent Email:', tempMail);
+
+    // Get the corresponding id from users
+    db.query('SELECT id FROM users WHERE email = ?', [tempMail], (err, userResult) => {
+      if (err) {
+        console.error('Error fetching user id:', err);
+        return res.status(500).send('Server Error');
+      }
+
+      const id = userResult[0].id;
+      console.log('Corresponding User ID:', id);
+
+      // Insert data into dataset
+      const sql = 'INSERT INTO dataset (Id, Time, Machine, Component, Parameter, Value) VALUES (?, NOW(), ?, ?, ?, ?)';
+      db.query(sql, [id, machine, Complaint_Type, component, value], (err, insertResult) => {
+        if (err) {
+          console.error('Error inserting into dataset:', err);
+          return res.status(500).send('Server Error');
+        }
+
+        console.log('Data successfully inserted into dataset:', {
+          Id: id,
+          Time: new Date(),
+          Machine: machine,
+          Component: Complaint_Type,
+          Parameter: component,
+          Value: value
+        });
+
+        res.send('Data successfully inserted into dataset');
+      });
+    });
   });
 });
 
