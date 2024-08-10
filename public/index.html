@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>College Complaint and Resolution Portal</title>
+  <title>Predictive Vehicle Maintenance Portal</title>
   <meta content="width=device-width, initial-scale=1" name="viewport" />
   <link rel="icon" type="image/png" href="logoTop.png">
   <link href="style.css" rel="stylesheet" type="text/css" />
@@ -111,10 +111,10 @@
         <div class="side-panel"></div>
         <div class="container">
           <div class="contact_column is-left"><a href="#" class="logo_link w-inline-block">
-              <img src="logo.png" class="logo_image">
+              <img src="Caterpillar_Inc.-Logo.wine.png" class="logo_image">
             </a>
             <div class="headline_wrap">
-              <h1>College Complaint and Resolution Portal.</h1>
+              <h1>Predictive Vehicle Maintenance Portal</h1>
               <button onclick="window.location.href='index.html'" class="submit w-button">New Complaint</button>
               <button onclick="window.location.href='login.html'" class="submit w-button">Previous Complaints</button>
 
@@ -192,7 +192,11 @@
                 </div>
 
 
-
+                <div id="warning-message" class="warning">
+    <span id="warning-text"></span>
+    <a id="initiate-complaint" href="complaint.html" style="display: none;">Initiate Complaint</a>
+</div>
+                
                 <input type="submit" value="Submit" data-wait="Please wait..." class="submit w-button" />
 
               </form>
@@ -207,6 +211,58 @@
                 }
               </style>
               <script>
+               const dangerRanges = {
+    'Engine Oil Pressure': { low: 31.25, high: 48.75 },
+    'Engine Speed': { high: 1350 },
+    'Engine Temperature': { high: 78.75 },
+    'Brake Control': { low: 1.25 },
+    'Transmission Pressure': { low: 250, high: 337.5 },
+    'Pedal Sensor': { high: 3.525 },
+    'Water Fuel': { high: 1350 },
+    'Fuel Level': { low: 1.25 },
+    'Fuel Pressure': { low: 43.75, high: 48.75 },
+    'Fuel Temperature': { high: 300 },
+    'System Voltage': { low: 15.0, high: 11.25 },
+    'Exhaust Gas Temperature': { high: 273.75 },
+    'Hydraulic Pump Rate': { high: 93.75 },
+    'Air Filter Pressure Drop': { low: 25 }
+};
+
+document.getElementById('value').addEventListener('input', function() {
+    const component = document.getElementById('component').value;
+    const value = parseFloat(this.value);
+    const warningMessage = document.getElementById('warning-message');
+    const warningText = document.getElementById('warning-text');
+    const complaintLink = document.getElementById('initiate-complaint');
+
+    if (component && !isNaN(value)) {
+        let showWarning = false;
+
+        if (dangerRanges[component]) {
+            const range = dangerRanges[component];
+            if ((range.low !== undefined && value < range.low) || 
+                (range.high !== undefined && value > range.high)) {
+                showWarning = true;
+            }
+        }
+
+        if (showWarning) {
+            warningText.textContent = 'Your vehicle needs immediate servicing';
+            complaintLink.style.display = 'inline'; // Show the link
+            warningMessage.style.display = 'block';
+        } else {
+            warningMessage.style.display = 'none';
+            complaintLink.style.display = 'none'; // Hide the link
+        }
+    } else {
+        warningMessage.style.display = 'none';
+        complaintLink.style.display = 'none'; // Hide the link
+    }
+});
+
+            </script>
+              <script>
+                
                 function updateDropdown(componentType) {
                   const componentDropdown = document.getElementById("component");
                   componentDropdown.innerHTML = ""; // Clear existing options

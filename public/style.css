@@ -1,6 +1,41 @@
+option { 
+  /* Whatever color  you want */
+  background-color: #333;
+}
+
+.warning {
+  color: red; /* Color for the warning message */
+  font-size: 22px; /* Increase font size for visibility */
+  font-weight: bold; /* Make warning message bold */
+}
+
+#warning-text {
+  display: block; /* Make sure the warning message occupies its own line */
+}
+
+#initiate-complaint {
+  font-weight: bold; /* Make the link bold */
+  text-decoration: underline; /* Underline the link */
+  color: red; /* Match the color with the warning text */
+  margin-top: 6px; /* Add some space above the link */
+  display: block; /* Ensure the link starts on a new line */
+}
+
 
 .field_wrap .field.name.w-input {
-  color: #000000; /* Hex code for black */
+  position: relative;
+  z-index: 1;
+  margin-bottom: -0.3em;
+  -webkit-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -webkit-transition: -webkit-transform 200ms ease;
+  transition: -webkit-transform 200ms ease;
+  transition: transform 200ms ease;
+  transition: transform 200ms ease, -webkit-transform 200ms ease;
+  color: hsla(0, 0%, 100%, 0.47);
+  font-size: 1.4em;
+  font-weight: 300;
 }
 
   
@@ -164,21 +199,19 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px; /* Adjust margin as needed */
+  margin: 00px; /* Adjust margin as needed */
   display: flex;
   align-items: center;
 }
 .logo_image {
-  width: 70px; /* Adjust the size as needed */
+  width: 170px; /* Adjust the size as needed */
   height: auto;
-  filter: invert(100%) brightness(200%); /* Makes the image white */
   
   transition: transform 0.2s, filter 0.2s; /* Smooth transition for hover effects */
 }
 
 .logo_image:hover {
   transform: scale(1.05); /* Slightly enlarge the logo on hover */
-  filter: invert(100%) brightness(250%); /* Slightly increase brightness on hover */
 }
 
  
