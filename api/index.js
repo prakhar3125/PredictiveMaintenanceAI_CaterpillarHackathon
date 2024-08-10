@@ -5,12 +5,14 @@ const bcrypt = require('bcrypt');  // Ensure bcrypt is included
 const app = express();
 const port = 3000;
 const moment = require('moment'); // For handling current time
+require('dotenv').config(); // Load environment variables from .env file
+
 // Create MySQL connection
 const db = mysql.createConnection({
-  host: 'your-clever-cloud-host',
-  user: 'your-user',
-  password: 'your-password',
-  database: 'your-database-name'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
