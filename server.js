@@ -65,7 +65,7 @@ app.post('/login', (req, res) => {
       return res.status(400).send('Both email and password are required.');
   }
 
-  // Query the database
+  // Query the database for the user
   const sql = 'SELECT password FROM users WHERE email = ?';
   db.query(sql, [Email], (err, results) => {
       if (err) {
@@ -84,8 +84,19 @@ app.post('/login', (req, res) => {
               }
 
               if (isMatch) {
-                  // Successful login, redirect to index.html
-                  res.redirect('/index.html');
+                  // Successful login, insert into logs table
+                  console.log(`Inserting into logs: ${Email}`);
+                  const insertLogSql = 'INSERT INTO logs (emailid) VALUES (?)';
+                  db.query(insertLogSql, [Email], (err) => {
+                      if (err) {
+                          console.error('Error inserting into logs:', err);
+                          return res.status(500).send('Error processing your request.');
+                      }
+
+                      console.log('Insertion into logs successful.');
+                      // Redirect to index.html
+                      res.redirect('/index.html');
+                  });
               } else {
                   // Incorrect password
                   res.status(401).send('Invalid email or password.');
@@ -97,6 +108,7 @@ app.post('/login', (req, res) => {
       }
   });
 });
+
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

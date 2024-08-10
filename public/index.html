@@ -126,12 +126,7 @@
           <div class="contact_column is-right">
             <div class="form w-form">
               <form id="contact-form" name="email-form" data-name="Email Form" method="POST" >
-                <div class="field_wrap">
-                  <label for="name" class="field_label large">Id</label>
-                  <input type="text" class="field name w-input" data-msg-minlength="Please enter your full name" maxlength="256"
-                         name="name" data-name="Name" placeholder="" minlength="3" id="name" 
-                         data-msg="What should we call you?" required="" />
-                </div>
+                
                 <div class="field_wrap">
                   <!-- <label for="machine" class="field_label large">Machine</label> -->
                   <select class="field name w-input" name="machine" id="machine" required="">
@@ -178,10 +173,11 @@
                 
                 
                 <div class="field_wrap">
-                  <label for="email" class="field_label large">Email Id</label>
-                  <input type="email" class="field email w-input" maxlength="256" name="email" data-name="Email"
-                         placeholder="" id="email" required="" />
-                </div>
+                  <label for="value" class="field_label large">Value</label>
+                  <input type="number" class="field number w-input" maxlength="256" name="value" data-name="Value"
+                         placeholder="" id="value" required step="0.01" />
+              </div>
+              
                 
                
                 <input type="submit" value="Submit" data-wait="Please wait..." class="submit w-button" />
@@ -280,24 +276,7 @@
                    });
                </script>
               
-              <script>
-                function toggleComplaintField() {
-                  const roomCleaning = document.getElementById('Room Cleaning').checked;
-                  const complaintField = document.getElementById('complaint-field');
-                  const complaintTextarea = document.getElementById('message');
-              
-                  if (roomCleaning) {
-                    complaintField.classList.add('hidden');
-                    complaintTextarea.removeAttribute('required');
-                  } else {
-                    complaintField.classList.remove('hidden');
-                    complaintTextarea.setAttribute('required', 'required');
-                  }
-                }
-              
-                // Initial check in case the form is pre-filled
-                toggleComplaintField();
-              </script>
+             
               
               
               <div class="success w-form-done">
