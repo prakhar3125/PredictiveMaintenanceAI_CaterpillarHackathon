@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:07:51.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Fuel",
+    "Parameter": "Water Fuel",
+    "Value": "45.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:07:59.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Fuel",
+    "Parameter": "Fuel Level",
+    "Value": "455.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:10:02.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Misc",
+    "Parameter": "System Voltage",
+    "Value": "15.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:10:55.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Drive",
+    "Parameter": "Brake Control",
+    "Value": "12.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:11:04.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Misc",
+    "Parameter": "System Voltage",
+    "Value": "12.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:11:10.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Drive",
+    "Parameter": "Brake Control",
+    "Value": "232.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:11:56.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Misc",
+    "Parameter": "System Voltage",
+    "Value": "54.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:12:07.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Misc",
+    "Parameter": "Air Filter Pressure Drop",
+    "Value": "67.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:13:00.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Fuel",
+    "Parameter": "Fuel Pressure",
+    "Value": "111.00"
+  },
+  {
+    "Id": 14,
+    "Time": "2024-08-10T22:13:05.000Z",
+    "Machine": "Excavator_1",
+    "Component": "Fuel",
+    "Parameter": "Fuel Temperature",
+    "Value": "22.00"
+  }
+]

@@ -118,7 +118,7 @@
               <button onclick="window.location.href='index.html'" class="submit w-button">Submit Maintenance Report</button>
               <button onclick="window.location.href='index2.html'" class="submit w-button">Predict Equipment Maintenance</button>
               <button onclick="window.location.href='complaint.html'" class="submit w-button">Complaint Portal</button>
-
+              <button onclick="window.location.href='check.html'" class="submit w-button">Past Complaints</button>
 
             </div><a href="https://www.linkedin.com/in/prakhar3125/" class="contact_email"></a>
             <a href="https://github.com/prakhar3125/College-Complaint-and-Resolution-portal" class="contact_email"></a>
@@ -126,10 +126,7 @@
           </div>
           <div class="contact_column is-right">
             <div class="form w-form">
-              <form id="contact-form" name="email-form" data-name="Email Form" method="POST" action="/submit-form">
-
-
-
+              <form id="contact-form" name="email-form" data-name="Email Form" method="POST" action="/process-complaint">
                 <div class="field_wrap">
                   <!-- <label for="machine" class="field_label large">Machine</label> -->
                   <select class="field name w-input" name="machine" id="machine" required="">
@@ -141,67 +138,29 @@
                     <option value="Asphalt_Paver_1">Asphalt_Paver_1</option>
                   </select>
                 </div>
-                <div id="budget" class="field_wrap is-radio">
-                  <label for="Message-2" class="field_label is-radio">Type of Component</label>
-                  <div class="radio_wrap">
-                    <label class="radio_field w-radio">
-                      <div
-                        class="w-form-formradioinput w-form-formradioinput--inputType-custom radio_button w-radio-input">
-                      </div>
-                      <input type="radio" data-name="Complaint_Type" id="Fuel" name="Complaint_Type" value="Fuel"
-                        style="opacity:0;position:absolute;z-index:-1" onclick="updateDropdown(this.value)" />
-                      <span class="radio_label w-form-label" for="Fuel">Fuel</span>
-                    </label>
-                    <label class="radio_field w-radio">
-                      <div
-                        class="w-form-formradioinput w-form-formradioinput--inputType-custom radio_button w-radio-input">
-                      </div>
-                      <input type="radio" data-name="Complaint_Type" id="Engine" name="Complaint_Type" value="Engine"
-                        style="opacity:0;position:absolute;z-index:-1" onclick="updateDropdown(this.value)" />
-                      <span class="radio_label w-form-label" for="Engine">Engine</span>
-                    </label>
-                    <label class="radio_field w-radio">
-                      <div
-                        class="w-form-formradioinput w-form-formradioinput--inputType-custom radio_button w-radio-input">
-                      </div>
-                      <input type="radio" data-name="Complaint_Type" id="Drive" name="Complaint_Type" value="Drive"
-                        style="opacity:0;position:absolute;z-index:-1" onclick="updateDropdown(this.value)" />
-                      <span class="radio_label w-form-label" for="Drive">Drive</span>
-                    </label>
-                    <label class="radio_field w-radio">
-                      <div
-                        class="w-form-formradioinput w-form-formradioinput--inputType-custom radio_button w-radio-input">
-                      </div>
-                      <input type="radio" data-name="Complaint_Type" id="Misc" name="Complaint_Type" value="Misc"
-                        style="opacity:0;position:absolute;z-index:-1" onclick="updateDropdown(this.value)" />
-                      <span class="radio_label w-form-label" for="Misc">Misc</span>
-                    </label>
-                  </div>
-                </div>
-
+              
                 <div class="field_wrap">
-                  <!-- <label for="component" class="field_label large">Component</label> -->
-                  <select class="field name w-input" name="component" id="component" required="">
-                    <option value="">Select a Component</option>
-                  </select>
+                  <label for="vehicle-location" class="field_label large">Vehicle Location</label>
+                  <textarea class="field message w-input" maxlength="5000" name="vehicle_location" id="vehicle-location" placeholder="" minlength="10" required=""></textarea>
+                  <div class="error2"></div>
                 </div>
-
-
+              
                 <div class="field_wrap">
-                  <label for="value" class="field_label large">Value</label>
-                  <input type="number" class="field number w-input" maxlength="256" name="value" data-name="Value"
-                    placeholder="" id="value" required step="0.01" />
+                  <label for="complaint-description" class="field_label large">Tell us about your Complaint</label>
+                  <textarea class="field message w-input" maxlength="5000" name="complaint_description" id="complaint-description" placeholder="" minlength="10" required=""></textarea>
+                  <div class="error2"></div>
                 </div>
-
-
-                <div id="warning-message" class="warning">
-    <span id="warning-text"></span>
-    <a id="initiate-complaint" href="complaint.html" style="display: none;">Initiate Complaint</a>
-</div>
-                
+              
+                <!-- New Section: Book Servicing Date -->
+                <div class="field_wrap">
+                  <label for="servicing-date" class="ffield_label large">Book Servicing Date</label>
+                  <input type="date" class="field name w-input" name="servicing_date" id="servicing-date" required="">
+                </div>
+              
                 <input type="submit" value="Submit" data-wait="Please wait..." class="submit w-button" />
-
               </form>
+              
+              
 
               <style>
                 #complaint-field {
@@ -212,108 +171,8 @@
                   display: none;
                 }
               </style>
-              <script>
-               const dangerRanges = {
-    'Engine Oil Pressure': { low: 31.25, high: 48.75 },
-    'Engine Speed': { high: 1350 },
-    'Engine Temperature': { high: 78.75 },
-    'Brake Control': { low: 1.25 },
-    'Transmission Pressure': { low: 250, high: 337.5 },
-    'Pedal Sensor': { high: 3.525 },
-    'Water Fuel': { high: 1350 },
-    'Fuel Level': { low: 1.25 },
-    'Fuel Pressure': { low: 43.75, high: 48.75 },
-    'Fuel Temperature': { high: 300 },
-    'System Voltage': { low: 15.0, high: 11.25 },
-    'Exhaust Gas Temperature': { high: 273.75 },
-    'Hydraulic Pump Rate': { high: 93.75 },
-    'Air Filter Pressure Drop': { low: 25 }
-};
-
-document.getElementById('value').addEventListener('input', function() {
-    const component = document.getElementById('component').value;
-    const value = parseFloat(this.value);
-    const warningMessage = document.getElementById('warning-message');
-    const warningText = document.getElementById('warning-text');
-    const complaintLink = document.getElementById('initiate-complaint');
-
-    if (component && !isNaN(value)) {
-        let showWarning = false;
-
-        if (dangerRanges[component]) {
-            const range = dangerRanges[component];
-            if ((range.low !== undefined && value < range.low) || 
-                (range.high !== undefined && value > range.high)) {
-                showWarning = true;
-            }
-        }
-
-        if (showWarning) {
-            warningText.textContent = 'Your vehicle needs immediate servicing';
-            complaintLink.style.display = 'inline'; // Show the link
-            warningMessage.style.display = 'block';
-        } else {
-            warningMessage.style.display = 'none';
-            complaintLink.style.display = 'none'; // Hide the link
-        }
-    } else {
-        warningMessage.style.display = 'none';
-        complaintLink.style.display = 'none'; // Hide the link
-    }
-});
-
-            </script>
-              <script>
+              
                 
-                function updateDropdown(componentType) {
-                  const componentDropdown = document.getElementById("component");
-                  componentDropdown.innerHTML = ""; // Clear existing options
-
-                  const defaultOption = document.createElement("option");
-                  defaultOption.value = "";
-                  defaultOption.text = "Select a Component";
-                  componentDropdown.appendChild(defaultOption);
-
-                  let options = [];
-
-                  if (componentType === "Fuel") {
-                    options = [
-                      { value: "Water Fuel", text: "Water Fuel" },
-                      { value: "Fuel Level", text: "Fuel Level" },
-                      { value: "Fuel Pressure", text: "Fuel Pressure" },
-                      { value: "Fuel Temperature", text: "Fuel Temperature" }
-                    ];
-                  } else if (componentType === "Engine") {
-                    options = [
-                      { value: "Engine Oil Pressure", text: "Engine Oil Pressure" },
-                      { value: "Engine Speed", text: "Engine Speed" },
-                      { value: "Engine Temperature", text: "Engine Temperature" }
-                    ];
-                  } else if (componentType === "Drive") {
-                    options = [
-                      { value: "Brake Control", text: "Brake Control" },
-                      { value: "Transmission Pressure", text: "Transmission Pressure" },
-                      { value: "Pedal Sensor", text: "Pedal Sensor" }
-                    ];
-                  } else if (componentType === "Misc") {
-                    options = [
-                      { value: "System Voltage", text: "System Voltage" },
-                      { value: "Exhaust Gas Temperature", text: "Exhaust Gas Temperature" },
-                      { value: "Hydraulic Pump Rate", text: "Hydraulic Pump Rate" },
-                      { value: "Air Filter Pressure Drop", text: "Air Filter Pressure Drop" }
-                    ];
-                  }
-
-                  // Add the new options to the dropdown
-                  options.forEach(optionData => {
-                    const option = document.createElement("option");
-                    option.value = optionData.value;
-                    option.text = optionData.text;
-                    componentDropdown.appendChild(option);
-                  });
-                }
-
-              </script>
 
               <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
               <!-- <script>

@@ -1,3 +1,4 @@
+
 option { 
   /* Whatever color  you want */
   background-color: #333;
@@ -2736,6 +2737,33 @@ blockquote {
   -ms-transform: scale(1.2) translate(0px, 1.6em);
   transform: scale(1.2) translate(0px, 1.6em);
 }
+
+.ffield_label {
+  position: relative;
+  z-index: 1;
+  margin-bottom: -0.3em;
+  -webkit-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -webkit-transition: -webkit-transform 200ms ease;
+  transition: -webkit-transform 200ms ease;
+  transition: transform 200ms ease;
+  transition: transform 200ms ease, -webkit-transform 200ms ease;
+  color: hsla(0, 0%, 100%, 0.47);
+  font-size: 1.4em;
+  font-weight: 300;
+}
+
+/* .ffield_label.large {
+  -webkit-transform: scale(1.2) translate(0px, 1.6em);
+  -ms-transform: scale(1.2) translate(0px, 1.6em);
+  transform: scale(1.2) translate(0px, 1.6em);
+} */
+/* .ffield_label.large {
+  -webkit-transform: scale(1.2) translate(0px, 1.6em);
+  -ms-transform: scale(1.2) translate(0px, 1.6em);
+  transform: scale(1.2) translate(0px, 1.6em);
+} */
 
 .field_label.is-radio {
   margin-bottom: 0.5em;
