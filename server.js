@@ -247,6 +247,27 @@ app.post('/process-complaint', (req, res) => {
 });
 
 
+app.get('/past-complaints', (req, res) => {
+  db.query('SELECT machine, complaint_description, servicing_date, vehicle_location, submission_date AS complaint_date FROM complaints', (err, results) => {
+    if (err) {
+      console.error('Error fetching complaints:', err);
+      return res.status(500).json({ error: 'Database query failed' });
+    }
+
+    // Convert date fields to a readable format
+    results = results.map(complaint => ({
+      ...complaint,
+      complaint_date: new Date(complaint.complaint_date).toLocaleString(), // Convert to local date string
+      servicing_date: new Date(complaint.servicing_date).toLocaleDateString(), // Convert to local date string
+    }));
+
+    res.json(results);
+  });
+});
+
+
+
+
 
 // Start server
 app.listen(port, () => {
