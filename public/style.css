@@ -2802,6 +2802,38 @@ blockquote {
   color: #fff;
 }
 
+.subbmit {
+  margin-top: 1em;
+  padding: 0.3em 2.1em;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #fff;
+  border-radius: 100vw;
+  background-color: transparent;
+  -webkit-transition: all 100ms ease;
+  transition: all 100ms ease;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+.subbmit:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.subbmit:focus {
+  border-color: #49fefd;
+}
+
+.subbmit.inactive {
+  opacity: 0.5;
+}
+
+.subbmit.inactive:hover {
+  background-color: transparent;
+  color: #fff;
+}
+
 .side-panel {
   
   position: fixed;

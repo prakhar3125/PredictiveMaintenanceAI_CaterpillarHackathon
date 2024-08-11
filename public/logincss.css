@@ -2279,7 +2279,7 @@ textarea.w-select {
 }
 
 .field-label-2 {
-  color: #374252;
+  color: #d7d7d7;
   font-weight: 600;
 }
 
@@ -2319,9 +2319,15 @@ textarea.w-select {
 .text-block-8 {
   margin-right: 3px;
   font-size: 16px;
+  color: #d7d7d7; /* Set the text color */
 }
 
+
 .page-wrapper {
+  background-image: url('img.jpg'); /* Replace with your actual image path */
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center; /* Centers the image in the wrapper */
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -2515,7 +2521,7 @@ textarea.w-select {
   -ms-flex-item-align: center;
   -ms-grid-row-align: center;
   align-self: center;
-  color: #2d323e;
+  color: #d7d7d7;
   font-size: 26px;
   line-height: 130%;
   font-weight: 500;
@@ -2539,7 +2545,7 @@ textarea.w-select {
   -ms-flex-item-align: center;
   -ms-grid-row-align: center;
   align-self: center;
-  color: rgba(55, 66, 82, 0.8);
+  color: color: #d7d7d7;
   font-size: 16px;
   font-weight: 400;
   text-align: center;
@@ -2663,22 +2669,22 @@ textarea.w-select {
 
 .page-container {
   position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  width: 50%;
-  height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
-  background-color: #1b2d47;
+  width: 100%; /* Change width to 100% to cover the entire width */
+  height: 100%;
+  /* background-image: url('img.jpg'); */
+  background-size: cover; /* Ensure image covers the entire container */
+  background-position: center; /* Center the image */
 }
 
+
+
 .page-container._2 {
-  background-color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(10px);
+  
 }
 
 ._1px-div-line {
