@@ -248,22 +248,53 @@ app.post('/process-complaint', (req, res) => {
 
 
 app.get('/past-complaints', (req, res) => {
-  db.query('SELECT machine, complaint_description, servicing_date, vehicle_location, submission_date AS complaint_date FROM complaints', (err, results) => {
+  // Step 1: Find the most recent email in the logs table
+  db.query('SELECT emailid FROM logs ORDER BY log_id DESC LIMIT 1', (err, results) => {
     if (err) {
-      console.error('Error fetching complaints:', err);
-      return res.status(500).json({ error: 'Database query failed' });
+      console.error('Error fetching recent email:', err.message);
+      return res.status(500).json({ error: 'Error fetching recent email' });
     }
 
-    // Convert date fields to a readable format
-    results = results.map(complaint => ({
-      ...complaint,
-      complaint_date: new Date(complaint.complaint_date).toLocaleString(), // Convert to local date string
-      servicing_date: new Date(complaint.servicing_date).toLocaleDateString(), // Convert to local date string
-    }));
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No recent email found' });
+    }
 
-    res.json(results);
+    const recentEmail = results[0].emailid;
+
+    // Step 2: Find the corresponding user Id for the recent email
+    db.query('SELECT id FROM users WHERE email = ?', [recentEmail], (err, results) => {
+      if (err) {
+        console.error('Error fetching user Id:', err.message);
+        return res.status(500).json({ error: 'Error fetching user Id' });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ error: 'User not found for the recent email' });
+      }
+
+      const userId = results[0].id;
+
+      // Step 3: Fetch complaints for the user Id
+      db.query('SELECT machine, complaint_description, servicing_date, vehicle_location, submission_date AS complaint_date FROM complaints WHERE Id = ?', [userId], (err, results) => {
+        if (err) {
+          console.error('Error fetching complaints:', err.message);
+          return res.status(500).json({ error: 'Error fetching complaints' });
+        }
+
+        // Step 4: Convert date fields to a readable format
+        results = results.map(complaint => ({
+          ...complaint,
+          complaint_date: new Date(complaint.complaint_date).toLocaleString(), // Convert to local date string
+          servicing_date: new Date(complaint.servicing_date).toLocaleDateString(), // Convert to local date string
+        }));
+
+        res.json(results);
+      });
+    });
   });
 });
+
+
 
 
 
