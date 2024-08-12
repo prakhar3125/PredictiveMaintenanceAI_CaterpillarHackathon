@@ -150,36 +150,72 @@ app.post('/submit-form', (req, res) => {
 });
 
 // Handle fetching machine data and saving to JSON file
+// app.post('/get-machine-data', async (req, res) => {
+//   const selectedMachine = req.body.machine;
+
+//   try {
+//     // Step 1: Get the most recent emailid from the logs table
+//     const [log] = await db.promise().query('SELECT emailid FROM logs ORDER BY log_id DESC LIMIT 1');
+//     const tempMail = log[0].emailid;
+
+//     // Step 2: Get the corresponding Id from the users table
+//     const [user] = await db.promise().query('SELECT id FROM users WHERE email = ?', [tempMail]);
+//     const fetchedId = user[0].id;
+
+//     // Step 3: Fetch the dataset based on the Id and selected machine, excluding the primary key
+//     const [dataset] = await db.promise().query('SELECT Id, Time, Machine, Component, Parameter, Value FROM dataset WHERE Id = ? AND Machine = ?', [fetchedId, selectedMachine]);
+
+//     // Step 4: Convert the dataset to JSON
+//     const jsonData = JSON.stringify(dataset, null, 2); // Pretty-print with 2 spaces
+
+//     // Step 5: Define the file path and save the JSON file to the hard disk
+//     const filePath = path.join(__dirname, 'machine_data.json');
+//     fs.writeFileSync(filePath, jsonData);
+
+//     // Send success response
+//     res.json({ message: 'Data saved to machine_data.json', filePath: filePath });
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//     res.status(500).json({ error: 'An error occurred while fetching and saving the data.' });
+//   }
+// });
+
 app.post('/get-machine-data', async (req, res) => {
-  const selectedMachine = req.body.machine;
-
   try {
-    // Step 1: Get the most recent emailid from the logs table
-    const [log] = await db.promise().query('SELECT emailid FROM logs ORDER BY log_id DESC LIMIT 1');
-    const tempMail = log[0].emailid;
+      const selectedMachine = req.body.machine;
 
-    // Step 2: Get the corresponding Id from the users table
-    const [user] = await db.promise().query('SELECT id FROM users WHERE email = ?', [tempMail]);
-    const fetchedId = user[0].id;
+      // Step 1: Get the most recent emailid from the logs table
+      const [logs] = await db.query('SELECT emailid FROM logs ORDER BY log_id DESC LIMIT 1');
+      const tempMail = logs[0].emailid;
 
-    // Step 3: Fetch the dataset based on the Id and selected machine, excluding the primary key
-    const [dataset] = await db.promise().query('SELECT Id, Time, Machine, Component, Parameter, Value FROM dataset WHERE Id = ? AND Machine = ?', [fetchedId, selectedMachine]);
+      // Step 2: Get the corresponding Id from the users table
+      const [users] = await db.query('SELECT id FROM users WHERE email = ?', [tempMail]);
+      const fetchedId = users[0].id;
 
-    // Step 4: Convert the dataset to JSON
-    const jsonData = JSON.stringify(dataset, null, 2); // Pretty-print with 2 spaces
+      // Step 3: Fetch the dataset based on the Id and selected machine
+      const [dataset] = await db.query('SELECT Id, Time, Machine, Component, Parameter, Value FROM dataset WHERE Id = ? AND Machine = ?', [fetchedId, selectedMachine]);
 
-    // Step 5: Define the file path and save the JSON file to the hard disk
-    const filePath = path.join(__dirname, 'machine_data.json');
-    fs.writeFileSync(filePath, jsonData);
+      // Convert the dataset to JSON
+      const jsonData = dataset.map(row => ({
+          id: row.Id,
+          time: row.Time,
+          machine: row.Machine,
+          component: row.Component,
+          parameter: row.Parameter,
+          value: row.Value
+      }));
 
-    // Send success response
-    res.json({ message: 'Data saved to machine_data.json', filePath: filePath });
+      // Send JSON data to the Flask API
+      const response = await axios.post('http://localhost:5000/predict', jsonData);
+      const prediction = response.data;
+
+      // Render the prediction result on the HTML page
+      res.send(`<h1>Prediction Result</h1><p>${prediction}</p>`);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'An error occurred while fetching and saving the data.' });
+      console.error('Error:', error);
+      res.status(500).send('Internal Server Error');
   }
 });
-
 
 ///js without saving json
 // app.post('/get-machine-data', async (req, res) => {
