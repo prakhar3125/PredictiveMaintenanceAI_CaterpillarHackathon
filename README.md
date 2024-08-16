@@ -1,5 +1,6 @@
 # PredictiveMaintenanceAI_CaterpillarHackathon
 
+
 -Developed a full-stack application to manage vehicle reports, dynamically convert telematics data into JSON, and
 integrate with a Python-based machine learning model for risk prediction. Implemented a secure user
 authentication system to enhance user management. This enabled data-driven preventive maintenance and
